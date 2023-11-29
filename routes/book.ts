@@ -28,7 +28,7 @@ router.post("/", (req: Request, res: Response) => {
   const bookModel = new Book({ ...body });
 
   bookModel.save();
-  return res.json({ success: true });
+  return res.json({ success: true, code: 200 }); // 判断是否成功
 });
 
 // 删除
@@ -36,6 +36,25 @@ router.delete("/:id", async (req: Request, res: Response) => {
   const { id } = req.params; // 'book/1' params可以拿到id
   await Book.findByIdAndDelete(id); // 根据id删除
   res.status(200).json({ success: true }); // 告诉前端删除成功
+});
+
+// 详情
+router.get("/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const book = await Book.findById(id);
+
+  if (book) {
+    res.status(200).json({ data: book, success: true });
+  } else {
+    res.status(500).json({ message: "Book does not exist" });
+  }
+});
+
+router.put("/:id", async (req: Request, res: Response) => {
+  const body = req.body;
+  const { id } = req.params;
+  await Book.findOneAndUpdate({ _id: id }, body);
+  return res.status(200).json({ success: true });
 });
 
 export default router;
