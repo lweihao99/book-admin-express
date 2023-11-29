@@ -23,11 +23,11 @@ const bookSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-  publish: {
+  publishAt: {
     type: Number,
     default: null,
   },
-  CreatedAt: {
+  createdAt: {
     type: Number,
     default: Date.now,
   },

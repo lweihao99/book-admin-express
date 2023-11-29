@@ -1,6 +1,7 @@
 import mongoose, { mongo } from "mongoose";
 import userSchema from "./userModel";
 import bookSchema from "./bookModel";
+import categorySchema from "./categoryModel";
 
 const uri =
   "mongodb+srv://weihaoliu99:Lweihao99-@liuw-projects.3bbubhl.mongodb.net/?retryWrites=true&w=majority";
@@ -20,5 +21,6 @@ main()
 // 进行引入
 const User = mongoose.model("User", userSchema);
 const Book = mongoose.model("Book", bookSchema);
+const Category = mongoose.model("Category", categorySchema);
 
-export { User, Book };
+export { User, Book, Category };

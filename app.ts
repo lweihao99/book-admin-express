@@ -1,5 +1,6 @@
 import { User } from "./model";
 import BookRouter from "./routes/book";
+import CategoryRouter from "./routes/category";
 import express, { Request, Response, NextFunction } from "express";
 
 var createError = require("http-errors");
@@ -24,6 +25,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api/books", BookRouter); // 匹配url
+app.use("/api/categories", CategoryRouter); // 匹配url
 
 // catch 404 and forward to error handler
 app.use(function (req: Request, res: Response, next: NextFunction) {
