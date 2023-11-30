@@ -12,6 +12,7 @@ router.get("/", async (req: Request, res: Response) => {
     ...(category && { category }),
   })
     .skip((Number(current) - 1) * Number(pageSize))
+    .populate("category") // 关联
     .limit(Number(pageSize)); // 请求当前的页数的所有数据, skip 忽略当前页数-1*pageSize的总数， 并限制返回pageSize数目的数据
   const total = await Book.countDocuments({
     ...(name && { name }),
@@ -41,7 +42,7 @@ router.delete("/:id", async (req: Request, res: Response) => {
 // 详情
 router.get("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
-  const book = await Book.findById(id);
+  const book = await Book.findById(id).populate("category");
 
   if (book) {
     res.status(200).json({ data: book, success: true });
