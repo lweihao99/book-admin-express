@@ -9,7 +9,7 @@ const categorySchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  parent: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
+  parent: { type: mongoose.Schema.Types.ObjectId, ref: "Category" }, // 获取mongoDB的ObjectIds 并指向到Category collection
   publishAt: {
     type: Number,
     default: null,

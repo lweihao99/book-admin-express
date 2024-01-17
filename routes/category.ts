@@ -21,10 +21,12 @@ router.get("/", async (req: Request, res: Response) => {
   return res.status(200).json({ data, total }); // 返回给前端
 });
 
-// 创建
+// 创建新的分类
 router.post("/", async (req: Request, res: Response) => {
   const { name } = req.body; // 分类名称
-  const oldCategory = await Category.findOne({ name }); // 判断是否在数据库里存在
+  const oldCategory = await Category.findOne({ name }); // 获取类
+
+  // 判断是否在数据库里已经存在
   if (oldCategory) {
     return res.status(500).json({ message: "Category already exist" });
   } else {

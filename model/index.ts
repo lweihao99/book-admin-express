@@ -3,11 +3,11 @@ import userSchema from "./userModel";
 import bookSchema from "./bookModel";
 import categorySchema from "./categoryModel";
 
-const uri =
-  "mongodb+srv://weihaoliu99:Lweihao99-@liuw-projects.3bbubhl.mongodb.net/?retryWrites=true&w=majority";
+const url =
+  "mongodb+srv://weihaoliu99:lweihao99@library.hy5gakr.mongodb.net/?retryWrites=true&w=majority";
 
 async function main() {
-  mongoose.connect(uri);
+  mongoose.connect(url);
 }
 
 main()
