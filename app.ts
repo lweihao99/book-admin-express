@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import session from "express-session";
+import { expressjwt } from "express-jwt";
 
 import BookRouter from "./routes/book";
 import CategoryRouter from "./routes/category";
@@ -7,6 +8,7 @@ import UserRouter from "./routes/users";
 import BorrowRouter from "./routes/borrows";
 import LoginRouter from "./routes/login";
 import LogoutRouter from "./routes/logout";
+import { SECRET_KEY } from "./config";
 
 var createError = require("http-errors");
 // var express = require("express");
@@ -31,12 +33,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+// 验证
 app.use(
-  session({
-    secret: "qwer123",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 60 * 60 * 24 * 1000 }, // 一天过期
+  expressjwt({ secret: SECRET_KEY, algorithms: ["HS256"] }).unless({
+    path: ["/login"],
   })
 );
 
