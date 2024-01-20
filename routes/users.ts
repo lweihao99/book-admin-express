@@ -5,13 +5,14 @@ const router = express.Router();
 
 // 获取页面数据
 router.get("/", async (req: Request, res: Response) => {
-  const { current = 1, pageSize = 20, name, author, category } = req.query; // 从url上的query获取参数
+  const { current = 1, pageSize = 20, name, status } = req.query; // 从url上的query获取参数
   const data = await User.find({
     ...(name && { name }),
     ...(status && { status }),
   })
     .skip((Number(current) - 1) * Number(pageSize))
-    .limit(Number(pageSize)); // 请求当前的页数的所有数据, skip 忽略当前页数-1*pageSize的总数， 并限制返回pageSize数目的数据
+    .limit(Number(pageSize));
+
   const total = await User.countDocuments({
     ...(name && { name }),
     ...(status && { status }),
@@ -22,11 +23,12 @@ router.get("/", async (req: Request, res: Response) => {
 
 // 创建
 router.post("/", (req: Request, res: Response) => {
-  const body = req.body; // 拿到创建书籍之后的数据
-  const UserModel = new User({ ...body });
+  const body = req.body;
+  const userModel = new User({ ...body });
 
-  UserModel.save();
-  return res.json({ success: true, code: 200 }); // 判断是否成功
+  // 将表单内容存储
+  userModel.save();
+  return res.json({ success: true, code: 200 });
 });
 
 // 删除
@@ -36,13 +38,13 @@ router.delete("/:id", async (req: Request, res: Response) => {
   res.status(200).json({ success: true }); // 告诉前端删除成功
 });
 
-// 详情
+// 获取user信息详情
 router.get("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
-  const User = await User.findById(id).populate("category");
+  const user = await User.findById(id);
 
-  if (User) {
-    res.status(200).json({ data: User, success: true });
+  if (user) {
+    res.status(200).json({ data: user, success: true });
   } else {
     res.status(500).json({ message: "User does not exist" });
   }

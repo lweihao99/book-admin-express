@@ -13,7 +13,7 @@ const bookSchema = new mongoose.Schema({
     type: String,
   },
   category: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId, // 跟category进行关联
     ref: "Category",
   },
   stock: {

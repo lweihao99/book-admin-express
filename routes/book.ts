@@ -13,7 +13,7 @@ router.get("/", async (req: Request, res: Response) => {
     ...(category && { category }),
   })
     .skip((Number(current) - 1) * Number(pageSize)) // 略过
-    .populate("category") // 关联
+    .populate("category") // 关联category
     .limit(Number(pageSize)); // 请求当前的页数的所有数据, skip 忽略当前页数-1*pageSize的总数， 并限制返回pageSize数目的数据
 
   const total = await Book.countDocuments({
