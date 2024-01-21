@@ -15,9 +15,7 @@ router.get("/", async (req: Request, res: Response) => {
   });
 
   // 如果用户是普通用户，则只返回自己的借阅，若是管理员返回所有的
-
   let newUser = user;
-  console.log(newUser);
 
   const data = await Borrow.find({
     ...(book && { book }),
