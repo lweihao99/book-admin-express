@@ -9,14 +9,11 @@ import BorrowRouter from "./routes/borrows";
 import LoginRouter from "./routes/login";
 import LogoutRouter from "./routes/logout";
 import { SECRET_KEY } from "./config";
+import createError from "http-errors";
+import path from "path";
+import cookieParser from "cookie-parser";
+import logger from "morgan";
 
-var createError = require("http-errors");
-// var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-
-const req = require("express/lib/request");
 require("./model/index");
 
 var app = express();
@@ -33,10 +30,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-// 验证
+// 验证,除login页面外其他路径请求如果JWT不对就返回401
 app.use(
   expressjwt({ secret: SECRET_KEY, algorithms: ["HS256"] }).unless({
-    path: ["/login"],
+    path: ["/api/login"],
   })
 );
 
